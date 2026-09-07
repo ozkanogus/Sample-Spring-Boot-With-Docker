@@ -9,3 +9,7 @@ Recorded on 2026-09-07.
 - added a MySQL-gated context test for Flyway and Hibernate validation;
 - replaced the placeholder README with setup, API, architecture, verification,
   container, and remaining-risk documentation.
+
+The first hosted run exposed missing Spring Boot 4 Flyway auto-configuration.
+The follow-up added the modular `spring-boot-starter-flyway` dependency and moved
+GitHub's JavaScript actions to their Node 24-compatible major versions.
