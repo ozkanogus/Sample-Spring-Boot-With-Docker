@@ -1,12 +1,6 @@
 package com.interview.ibm.model;
 
 import java.util.UUID;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-
 public class EmployeeDTO extends BaseDTO{
 
 private UUID id;
