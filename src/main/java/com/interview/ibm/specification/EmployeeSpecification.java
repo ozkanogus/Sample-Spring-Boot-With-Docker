@@ -19,7 +19,7 @@ public class EmployeeSpecification implements Specification<Employee> {
 
 	@Override
 	public Predicate toPredicate(Root<Employee> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-		Predicate result = criteriaBuilder.and(criteriaBuilder.equal(root.get("active"), true));
+		Predicate result = criteriaBuilder.conjunction();
 	
 		if (employee.getName() != null && !employee.getName().isEmpty()) {
 

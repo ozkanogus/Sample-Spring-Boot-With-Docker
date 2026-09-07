@@ -12,7 +12,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import jakarta.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,12 +24,11 @@ import org.springframework.web.server.ResponseStatusException;
 public class EmployeeService {
 
 	private final EmployeeRepository employeeRepository;
+	private final EmployeeMapper mapper;
 
-	@Autowired
-	private  EmployeeMapper mapper;
-
-	public EmployeeService(final EmployeeRepository employeeRepository) {
+	public EmployeeService(final EmployeeRepository employeeRepository, final EmployeeMapper mapper) {
 		this.employeeRepository = employeeRepository;
+		this.mapper = mapper;
 	}
 
 	public List<EmployeeDTO> findAll() {
@@ -70,6 +68,7 @@ public class EmployeeService {
 		Employee oldEmployee = employeeRepository.findById(id)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 		oldEmployee = mapToEntity(employeeDTO);
+		oldEmployee.setId(id);
 		employeeRepository.save(oldEmployee);
 	}
 
