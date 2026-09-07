@@ -1,0 +1,7 @@
+.git
+.github
+.idea
+.modernization
+target
+*.iml
+README.md
