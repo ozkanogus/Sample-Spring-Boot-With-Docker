@@ -2,10 +2,10 @@ package com.interview.ibm.specification;
 
 
 import com.interview.ibm.domain.Employee;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 
@@ -19,7 +19,7 @@ public class EmployeeSpecification implements Specification<Employee> {
 
 	@Override
 	public Predicate toPredicate(Root<Employee> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-		Predicate result = criteriaBuilder.and(criteriaBuilder.equal(root.get("active"), true));
+		Predicate result = criteriaBuilder.conjunction();
 	
 		if (employee.getName() != null && !employee.getName().isEmpty()) {
 

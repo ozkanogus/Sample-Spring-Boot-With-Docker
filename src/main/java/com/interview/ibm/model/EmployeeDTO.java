@@ -1,16 +1,14 @@
 package com.interview.ibm.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-
 public class EmployeeDTO extends BaseDTO{
 
 private UUID id;
+@NotBlank
 private String name;
+@NotNull
 private EmployeeRole role;
 
     public UUID getId() {

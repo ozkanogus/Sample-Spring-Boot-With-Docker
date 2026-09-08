@@ -6,6 +6,8 @@ import com.interview.ibm.model.ErrorResponse;
 import com.interview.ibm.model.FieldError;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -21,13 +23,15 @@ import org.springframework.web.server.ResponseStatusException;
 @RestControllerAdvice(annotations = RestController.class)
 public class RestExceptionHandler {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(RestExceptionHandler.class);
+
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<ErrorResponse> handleNotFound(final ResponseStatusException exception) {
         final ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setHttpStatus(exception.getStatus().value());
+        errorResponse.setHttpStatus(exception.getStatusCode().value());
         errorResponse.setException(exception.getClass().getSimpleName());
         errorResponse.setMessage(exception.getMessage());
-        return new ResponseEntity<>(errorResponse, exception.getStatus());
+        return new ResponseEntity<>(errorResponse, exception.getStatusCode());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -54,7 +58,7 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(Throwable.class)
     public ResponseEntity<ErrorResponse> handleThrowable(final Throwable exception) {
-        exception.printStackTrace();
+        LOGGER.error("Unhandled request failure", exception);
         final ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         errorResponse.setException(exception.getClass().getSimpleName());
@@ -64,11 +68,10 @@ public class RestExceptionHandler {
     
     @ExceptionHandler(DublicateRecordException.class)
     public ResponseEntity<ErrorResponse> handleDublicateRecordException(final DublicateRecordException exception) {
-        exception.printStackTrace();
         final ErrorResponse errorResponse = new ErrorResponse(); 
-        errorResponse.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        errorResponse.setHttpStatus(HttpStatus.CONFLICT.value());
         errorResponse.setException(exception.getClass().getSimpleName());
         errorResponse.setMessage(exception.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 }

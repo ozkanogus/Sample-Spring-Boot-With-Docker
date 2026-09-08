@@ -3,9 +3,7 @@ package com.interview.ibm.model;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
-import javax.persistence.MappedSuperclass;
 
-@MappedSuperclass
 public class BaseDTO {
 	
 	 	private UUID remoteUserId;		

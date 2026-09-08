@@ -2,16 +2,15 @@ package com.interview.ibm.domain;
 
 import com.interview.ibm.model.EmployeeRole;
 import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.UuidGenerator;
+import org.hibernate.type.SqlTypes;
 import org.hibernate.envers.Audited;
 
 @Entity
@@ -19,13 +18,14 @@ import org.hibernate.envers.Audited;
 public class Employee extends BaseEntity {
     @Id
     @Column(nullable = false, updatable = false, columnDefinition = "char(36)")
-    @Type(type = "uuid-char")
-    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
-    @GeneratedValue(generator = "uuid")
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @UuidGenerator
+    @GeneratedValue
     private UUID id;
 
     private String name;
 
+    @Enumerated(EnumType.STRING)
     private EmployeeRole role;
 
     public UUID getId() {
